@@ -102,6 +102,8 @@ trash
 
 ## 설정
 
+* **반드시 `main.py` 를 `INPUT_FOLDER_NAME ` 와 같은 계층에 두고 실행**
+
 * **`INPUT_FOLDER_NAME = ["batch_01", "batch_44"]` : 폴더 이름 설정**
 * **`JSON_NAME = ["data.json"]*len(INPUT_FOLDER_NAME)` : json 파일 이름 설정**
   * `json` 이름들이 다르다면 `JSON_NAME = ["data_01.json", "data_02.json",]` 형태로 설정

@@ -1,7 +1,7 @@
 import os
 import json
 import yaml
-from PIL import Image, ImageOps, ImageDraw, ImageFont # 간단한 이미지 resize는 PIL 라이브러리 활용
+from PIL import Image, ImageOps, ImageDraw, ImageFont, ImageFile # 간단한 이미지 resize는 PIL 라이브러리 활용
 
 ###########################################
 
@@ -89,7 +89,14 @@ def reImgLabFun(datas, cur, drawBBox):
             else:
                 ratio = 1
             # image resize
-            reImg = ImageOps.exif_transpose(img)
+            try:
+                # ImageFile.LOAD_TRUNCATED_IMAGES = True # 잘린 이미지 허용
+                reImg = ImageOps.exif_transpose(img)
+            except OSError as e:
+                print(f"해당 {inputDir}는 잘린 이미지로 판단되므로 pass")
+                global fileImgCount
+                fileImgCount -= 1
+                continue
             reImg = reImg.resize((width, height),resample=Image.LANCZOS)
             # image size update
             image['width'] = width
