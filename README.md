@@ -119,6 +119,9 @@ trash
 **참고**
 
 * **`test, valid, train -> 1:2:7 비율` 로 데이터셋을 진행**
+* **`notUseImgFun()` 란 카테고리를 'Paper' 만 사용할 경우 해당 카테고리가 없는 이미지는 제외하기 위해서 만든 함수**
+  * 해당 코드에서 카테고리 부분만 필요에 따라 커스텀
+
 * **`reImgLabFun(datas, i, 1) # 0:bbox not draw, 1:bbox draw` 란 함수 인자로 0을 주면 경계박스 없고, 1을 주면 경계박스 없는 사진 + 경계박스 그린 사진까지 폴더 구분해서 만듬**
 * **`data.yaml` 을 자동으로 생성**
 
@@ -126,7 +129,8 @@ trash
 
 ## 동작
 
-1. `INPUT_FOLDER_NAME` 에 폴더명 넣은 개수만큼 전체 반복
+1. `notUseImgFun()` 함수는 필요에 따라 사용
+1. `INPUT_FOLDER_NAME` 에 폴더명 넣은 개수만큼 전체 반복(주석 상태)
    1. `data.json` 파일 로드
    2. `reImgLabFun() 함수 실행`
       1. `data.json` 에 있는 전체 이미지를 가져와 해당 개수만큼 반복
