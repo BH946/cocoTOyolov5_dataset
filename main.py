@@ -159,8 +159,10 @@ def reImgLabFun(datas, cur, drawBBox):
                     # start draw bbox
                     category = findCategory(detail['category_id'],cur) # category 찾기
                     if(category==-1): 
-                        print("category가 -1로 데이터가 잘못 구성되어있습니다. 해당 데이터를 수정 or notUseImgs.txt에 추가하고 다시 돌리세요")
+                        print("category가 -1로 데이터가 잘못 구성되어있습니다. 해당 데이터를 수정 or notUseImgs.txt에 추가하고 다시 돌리세요 (자동으로 notUseImgs.txt에 추가합니다.)")
                         print(fileName, " 설정된 클래스 : ", detail['category_id'])
+                        with open('.\\notUseImgs.txt', 'a') as f5:
+                            f5.write(f'{INPUT_FOLDER_NAME[cur]}/{fileName}'+'\n')
                         break
                         # quit() # 종료
                     if(drawBBox==1):
@@ -246,7 +248,10 @@ def notUseImgFun():
 
 # main
 # save not use img => 필요에 따라 사용
-with open('.\\notUseImgs.txt', 'w'): pass # 기존 txt 초기화(생성)
+try:
+    with open('.\\notUseImgs.txt', 'r'): pass 
+except:
+    with open('.\\notUseImgs.txt', 'w'): pass # notUseImgs.txt 초기화(생성)
 # notUseImgFun() # 직접 txt에 사용안할 파일 적어도 됨 => 작성 형태 : '폴더명/파일명'
 
 for i in range(0, len(INPUT_FOLDER_NAME)):
