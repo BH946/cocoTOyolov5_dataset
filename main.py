@@ -177,6 +177,10 @@ def reImgLabFun(datas, cur, drawBBox):
                     # start labeling
                     with open(outputDir3+'\\'+str(fileNameCount)+'.txt', "a") as f2: 
                         bbox = findBBox(bbox,image) # bbox 값 찾기
+                        if(bbox[0]>1.0): bbox[0]=1.0
+                        if(bbox[1]>1.0): bbox[1]=1.0
+                        if(bbox[2]>1.0): bbox[2]=1.0
+                        if(bbox[3]>1.0): bbox[3]=1.0
                         f2.write(f"{category} {bbox[0]} {bbox[1]} {bbox[2]} {bbox[3]}\n")
             if(category==-1): continue
             # output path - 디렉토리 없으면 자동 생성
