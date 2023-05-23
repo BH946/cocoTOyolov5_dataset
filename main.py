@@ -163,6 +163,15 @@ def reImgLabFun(datas, cur, drawBBox):
                         print(fileName, " 설정된 클래스 : ", detail['category_id'])
                         with open('.\\notUseImgs.txt', 'a') as f5:
                             f5.write(f'{INPUT_FOLDER_NAME[cur]}/{fileName}'+'\n')
+                        # 다시 돌리기 귀찮을 수 있으니 관련 파일들 자동 삭제
+                        if os.path.isfile(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\labels\\{fileNameCount}.txt'):
+                            os.remove(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\labels\\{fileNameCount}.txt')
+                        if os.path.isfile(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\images\\{fileNameCount}.jpg'):
+                            os.remove(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\images\\{fileNameCount}.jpg')
+                        if os.path.isfile(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\images_bbox\\{fileNameCount}.jpg'):
+                            os.remove(f'.\\{OUTPUT_FOLDER_NAME}\\{tempPath}\\images_bbox\\{fileNameCount}.jpg')
+                        fileImgCount -= 1
+                        fileNameCount -= 1
                         break
                         # quit() # 종료
                     if(drawBBox==1):
