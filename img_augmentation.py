@@ -5,8 +5,8 @@ from PIL import Image, ImageOps, ImageDraw, ImageFont, ImageFile
 ###########################################
 
 # 설정
-# INPUT_FOLDER_NAME = ["train", "valid", "test"] # 이미지 증강할 폴더명 => Yolov5 형태 기준 코드 작성
-INPUT_FOLDER_NAME = ["test"] # 이미지 증강할 폴더명 => Yolov5 형태 기준 코드 작성
+INPUT_FOLDER_NAME = ["trash4_3(원본_3차분류_roboflow6개)\\train",
+                     "trash4_4(원본_3차분류_네이버 전부)\\test"] # 이미지 증강할 폴더명 => Yolov5 형태 기준 코드 작성
 
 ###########################################
 
@@ -26,11 +26,10 @@ for cur in range(len(INPUT_FOLDER_NAME)):
     # run
     for i in range(0, len(datas_img)):
         fileNameImg = datas_img[i]
-        fileNameLab = datas_lab[i]
         inputDirImg = f'.\\{INPUT_FOLDER_NAME[cur]}\\images\\{fileNameImg}'
-        inputDirLab = f'.\\{INPUT_FOLDER_NAME[cur]}\\labels\\{fileNameLab}'
-        with Image.open(inputDirImg) as img:
-            fileNameImg = fileNameImg.replace(".jpg", "")
+        fileNameImg = fileNameImg.replace(".jpg", "")
+        inputDirLab = f'.\\{INPUT_FOLDER_NAME[cur]}\\labels\\{fileNameImg}.txt'
+        with Image.open(inputDirImg) as img:    
             width, height = img.size
             bbox = [0, 0, 0, 0]
             items = []
@@ -75,7 +74,9 @@ for cur in range(len(INPUT_FOLDER_NAME)):
                 bbox = [float(item[1]), float(item[2]), float(item[3]), float(item[4])] # input 라벨링
                 bbox[0] = width-(bbox[0]*width) # 상대좌표 -> 절대좌표 변환 및 좌우대칭 좌표로 변환
                 bbox[0] = bbox[0]/width # 절대좌표 -> 상대좌표 변환
-                
+                # lab 저장
+                with open(f'.\\{INPUT_FOLDER_NAME[cur]}\\labels\\{fileNameImg}_LR.txt', "a") as f2: 
+                    f2.write(f"{item[0]} {bbox[0]} {bbox[1]} {bbox[2]} {bbox[3]}\n")
                 # 혹시나 bbox좌표도 그리고싶다면?? 아래 코드 사용(위에까진 yolov5 형식의 라벨링 좌표 상태)
                 # bbox = [bbox[0]*width, bbox[1]*height, bbox[2]*width, bbox[3]*height] # 상대좌표 -> 절대좌표(중심점,너비,높이) 좌표로 변환
                 # bbox = [bbox[0]-(bbox[2]/2),bbox[1]-(bbox[3]/2),bbox[0]+(bbox[2]/2),bbox[1]+(bbox[3]/2)] # 절대좌표(중심점,너비,높이) -> bbox leftTop, rightBottom 좌표로 변환
@@ -85,8 +86,4 @@ for cur in range(len(INPUT_FOLDER_NAME)):
                 # draw.rectangle((leftTop,rightBottom), outline='green', width=3)
             # img 증강
             img_flipped_LR.save(f'.\\{INPUT_FOLDER_NAME[cur]}\\images\\{fileNameImg}_LR.jpg')
-            # lab 복제
-            original_file_path = f'.\\{INPUT_FOLDER_NAME[cur]}\\labels\\{fileNameImg}.txt'
-            clone_file_path = f'.\\{INPUT_FOLDER_NAME[cur]}\\labels\\{fileNameImg}_LR.txt'
-            shutil.copyfile(original_file_path, clone_file_path)
 
