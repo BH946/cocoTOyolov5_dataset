@@ -222,5 +222,7 @@ trash
 **COCO 데이터를 YOLO 데이터 형태로 변환 및 이미지 리사이즈나 클래스명 커스텀 지원이 주 목적이었으며, 부가적인 함수들은 필요에 따라 사용**
 
 **실제 이 코드를 프로젝트에 사용한 모습을 보여주기 위해서  
-현재 진행중인 Yolov5 - Trash Detect 프로젝트가 끝나게 된다면, 추가로 깃에 정리하겠다.**
+이전에 진행했던 Yolo - Trash Detect 프로젝트 링크 제공**
+
+* **[trash detect](https://github.com/BH946/trash-detection)**
 
